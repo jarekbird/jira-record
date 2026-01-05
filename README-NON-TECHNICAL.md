@@ -41,7 +41,7 @@ Create a main folder called "MyProject" as an example.
 
 **Prompt to Cursor:**
 ```
-Create a DRAFT Feature markdown file in jira-record/issues/MyProject/ following the template from ga-jira/.cursor/rules/local-jira-records-feature.mdc. 
+Create a DRAFT Feature markdown file in jira-record/issues/MyProject/ following the template from .cursor/rules/local-jira-records-feature.mdc. 
 Name it "DRAFT - Feature - My First Feature.md" and include placeholder content for:
 - Summary
 - Business Problem
@@ -76,7 +76,7 @@ I've edited the Feature file. Sync my changes to Jira.
 
 **Prompt to Cursor:**
 ```
-Create a DRAFT Epic markdown file in jira-record/issues/MyProject/ following the template from ga-jira/.cursor/rules/local-jira-records-epic.mdc. 
+Create a DRAFT Epic markdown file in jira-record/issues/MyProject/ following the template from .cursor/rules/local-jira-records-epic.mdc. 
 Name it "DRAFT - Epic - My Epic.md" with placeholder content, then create it in Jira.
 ```
 
@@ -84,7 +84,7 @@ Name it "DRAFT - Epic - My Epic.md" with placeholder content, then create it in 
 
 **Prompt to Cursor:**
 ```
-Create a DRAFT User Story markdown file in jira-record/issues/MyProject/ following the template from ga-jira/.cursor/rules/local-jira-records-story-subtask.mdc. 
+Create a DRAFT User Story markdown file in jira-record/issues/MyProject/ following the template from .cursor/rules/local-jira-records-story-subtask.mdc. 
 Name it "DRAFT - Story - My User Story.md" with placeholder content, then create it in Jira.
 ```
 
@@ -146,7 +146,7 @@ If something doesn't work:
 - Try using `--dry-run` to see what the script would do
 - Ask Cursor to help troubleshoot the error message
 
-## See It In Action
+## Getting More Help
 
-For a real example of how this works, look at the `ga-jira` repository which uses this same structure to manage hundreds of Jira issues organized by project and feature area.
+The templates in `.cursor/rules/` provide detailed structure for each issue type. Cursor will automatically reference these when helping you create or manage Jira issues.
 

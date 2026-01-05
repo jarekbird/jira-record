@@ -162,12 +162,9 @@ See `.cursor/rules/` for detailed templates:
 
 For detailed information, see:
 - `.cursor/rules/jira-scripts-usage.mdc` - Script usage guidelines
-- `ga-jira/.cursor/rules/jira-mcp-integration.mdc` - Jira field IDs and API details (reference)
-- `ga-jira/.cursor/rules/local-jira-records-*.mdc` - Issue type templates (reference)
-
-## Example Usage Scenario
-
-See the `ga-jira` repository for a real-world example of how this repository structure can be used to manage hundreds of Jira issues organized by project, feature area, or namespace.
+- `.cursor/rules/local-jira-records-epic.mdc` - Epic structure template
+- `.cursor/rules/local-jira-records-feature.mdc` - Feature structure template
+- `.cursor/rules/local-jira-records-story-subtask.mdc` - User Story + Subtask structure template
 
 ## Troubleshooting
 
