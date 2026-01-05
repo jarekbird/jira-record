@@ -20,31 +20,31 @@ Follow these prompts in Cursor to get everything set up:
 
 **Prompt to Cursor:**
 ```
-Check if Python 3 is installed on this system. If it's not installed, provide instructions for installing Python 3.7 or higher for my operating system.
+Check if Python 3 is installed on this system by running a command to check the Python version. If it's not installed or the version is below 3.7, help me install Python 3.7 or higher using command-line tools.
 ```
 
-**If Python is not installed, use one of these prompts based on your system:**
+**If Python is not installed, Cursor will help you install it using one of these methods:**
 
 **For macOS:**
 ```
-I'm on macOS. Help me install Python 3 using Homebrew, or provide instructions for downloading it from python.org.
+I'm on macOS. Install Python 3 using Homebrew. If Homebrew isn't installed, install that first, then install Python 3.
 ```
 
 **For Windows:**
 ```
-I'm on Windows. Help me install Python 3 from the Microsoft Store or from python.org, and make sure it's added to my PATH.
+I'm on Windows. Install Python 3 using winget (Windows Package Manager). If winget isn't available, use chocolatey or help me install Python 3 via command line.
 ```
 
 **For Linux:**
 ```
-I'm on Linux. Help me install Python 3 using my package manager (apt, yum, etc.).
+I'm on Linux. Install Python 3 using the appropriate package manager for this distribution (apt, yum, dnf, pacman, etc.).
 ```
 
 **Verify Python is working:**
 
 **Prompt to Cursor:**
 ```
-Verify that Python 3 is installed and accessible. Check the version to make sure it's 3.7 or higher.
+Run a command to verify that Python 3 is installed and accessible. Check the version to make sure it's 3.7 or higher.
 ```
 
 ### Step 1: Set Up Your Environment
