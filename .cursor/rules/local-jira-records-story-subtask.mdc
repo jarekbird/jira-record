@@ -1,0 +1,343 @@
+---
+description: USE WHEN: creating local Markdown (.md) records that mirror Jira Stories and Subtasks in the G&A Jira environment.
+globs:
+alwaysApply: false
+---
+
+# Local Jira Records (Markdown) — User Story + Subtask Combo
+
+This rule defines **how to create local `.md` files** that act as the canonical "offline" record for a **single User Story and its single child Subtask** as a combo record.
+
+**Authoritative Jira field IDs, constraints, and formatting rules live in:** `.cursor/rules/jira-mcp-integration.mdc`.
+
+## Hierarchy
+
+- **Feature** (parent) → **User Story** (child of Feature) → **Subtask** (child of User Story)
+- Each User Story must have a `parent_key` pointing to a Feature
+- The Subtask must have a `parent_key` pointing to the User Story
+
+## Goals
+
+- Create local records that are **easy to read**, **diff**, and **copy into Jira**.
+- Ensure content is structured according to **Story and Subtask issue types** and the **custom field mappings** we use in Jira.
+- Enforce the **Story + Subtask pattern** for feature work.
+- Represent both the User Story and its single Subtask in a **single `.md` file**.
+
+## File Naming Conventions
+
+Use one of these:
+
+- If Jira key exists: `{USER_STORY_KEY} - {short-title}.md` (example: `WOR-123 - Add SSO mapping.md`)
+- If Jira key does not exist yet: `DRAFT - {issue-type} - {short-title}.md`
+
+Keep `{short-title}` short and filesystem-safe.
+
+## File Structure
+
+This single `.md` file contains:
+1. **User Story section** — with `parent_key` pointing to a Feature
+2. **Subtask section** — with `parent_key` pointing to the User Story
+
+## Common Front Matter (Recommended)
+
+Add YAML front matter at the top of the file containing metadata for both the User Story and Subtask:
+
+```yaml
+---
+# User Story metadata
+user_story:
+  jira_key: ""              # e.g. "WOR-123" once created (User Story key)
+  issue_type: "Story"
+  parent_key: ""            # Feature key (e.g. "WOR-456") - REQUIRED
+  status: "Estimation"      # Optional: human-readable
+  team_id: ""               # Optional: Jira Team field: customfield_10001 (UUID)
+  sprint_id: ""             # Optional: Jira Sprint field: customfield_10020 (integer)
+  pm_owner: ""              # Required: Jira PM Owner: customfield_10246 (email/account id) - DEFAULT: jbird@gnapartners.com
+  story_points: ""          # Optional: Jira Story Points (stored on Subtask in this Jira): customfield_10037
+  labels: []                # Optional
+  created_at: ""            # Optional
+
+# Subtask metadata
+subtask:
+  jira_key: ""              # e.g. "WOR-124" once created (Subtask key)
+  issue_type: "Subtask"
+  parent_key: ""            # User Story key (e.g. "WOR-123") - REQUIRED, must match user_story.jira_key
+  status: "Dev Ready"       # Optional: human-readable
+  assignee: ""              # Email or account id (depends on your Jira usage)
+  team_id: ""               # Jira Team field: customfield_10001 (UUID)
+  sprint_id: ""             # Jira Sprint field: customfield_10020 (integer)
+  story_points: ""          # Optional: Jira Story Points (also set on Subtasks in this Jira): customfield_10016
+  created_at: ""            # Optional
+---
+```
+
+> **Note:** 
+> - Team and Sprint are often shown as "inherited" in Jira UI. Don't assume non-editable — `jira-mcp-integration.mdc` explains checking `editmeta`.
+> - The `subtask.parent_key` must match the `user_story.jira_key` to establish the parent-child relationship.
+
+## Content Rules
+
+- **Summary/title must be ≤ 255 characters** (Jira constraint).
+- For **ADF fields** (custom fields that require ADF format), local records must store **both versions**:
+  - **Markdown version** (human-readable, for editing and review)
+  - **ADF JSON version** (for direct use in Jira API calls)
+- The ADF version should be stored in a collapsible code block or separate section below the Markdown version.
+- **Do NOT include references to other local `.md` files** in descriptions sent to Jira. These local files do not exist in Jira and such references will be broken links. Only reference Jira issues (by key, e.g., `WOR-123`) or external URLs.
+
+## User Story + Subtask Combo Template
+
+This template represents **one User Story** (child of a Feature) and **one Subtask** (child of the User Story) in a single file.
+
+### User Story Section
+
+**Story fields from `jira-mcp-integration.mdc`:**
+- Technical Notes: `customfield_10356` (**ADF**)
+- Acceptance Criteria: `customfield_10256` (**ADF**)
+- Team: `customfield_10001`
+- Sprint: `customfield_10020`
+- Story Points: `customfield_10037` (stored on Subtask in this Jira)
+- **Parent: Feature key** (via `parent` field in Jira)
+
+```markdown
+---
+# User Story metadata
+user_story:
+  jira_key: ""              # e.g. "WOR-123" once created
+  issue_type: "Story"
+  parent_key: ""            # Feature key (e.g. "WOR-456") - REQUIRED
+  status: ""
+  team_id: ""
+  sprint_id: ""
+  pm_owner: ""
+  story_points: ""
+  created_at: ""
+
+# Subtask metadata
+subtask:
+  jira_key: ""              # e.g. "WOR-124" once created
+  issue_type: "Subtask"
+  parent_key: ""            # User Story key (e.g. "WOR-123") - REQUIRED, must match user_story.jira_key
+  status: "Dev Ready"
+  assignee: ""
+  team_id: ""
+  sprint_id: ""
+  story_points: ""
+  created_at: ""
+---
+
+# User Story
+
+## Acceptance Criteria (customfield_10256)
+
+> **Note:** All detailed information for the Jira Issue should be placed in the Acceptance Criteria field.
+
+[Markdown content - human-readable version]
+
+<details>
+<summary>ADF Version (customfield_10256)</summary>
+
+```json
+{
+  "type": "doc",
+  "version": 1,
+  "content": [
+    {
+      "type": "bulletList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "[Convert markdown above to ADF]" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+## Technical Notes (customfield_10356)
+
+[Markdown content - human-readable version]
+
+<details>
+<summary>ADF Version (customfield_10356)</summary>
+
+```json
+{
+  "type": "doc",
+  "version": 1,
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "text": "[Convert markdown above to ADF]" }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+---
+
+# Subtask
+
+> **Note:** All detailed information for the Jira Issue should be placed in the Acceptance Criteria field.
+
+## Implementation Steps (Technical Notes — customfield_10356)
+
+[Markdown content - human-readable version]
+
+<details>
+<summary>ADF Version (customfield_10356)</summary>
+
+```json
+{
+  "type": "doc",
+  "version": 1,
+  "content": [
+    {
+      "type": "orderedList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "[Convert markdown above to ADF]" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+## Acceptance Criteria (customfield_10256)
+
+[Markdown content - human-readable version]
+
+<details>
+<summary>ADF Version (customfield_10256)</summary>
+
+```json
+{
+  "type": "doc",
+  "version": 1,
+  "content": [
+    {
+      "type": "bulletList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "[Convert markdown above to ADF]" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+## QA Test Case (customfield_10462) (if needed)
+
+[Markdown content - human-readable version]
+
+<details>
+<summary>ADF Version (customfield_10462)</summary>
+
+```json
+{
+  "type": "doc",
+  "version": 1,
+  "content": [
+    {
+      "type": "heading",
+      "attrs": { "level": 3 },
+      "content": [
+        { "type": "text", "text": "Test Steps" }
+      ]
+    },
+    {
+      "type": "orderedList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "[Convert markdown above to ADF]" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "attrs": { "level": 3 },
+      "content": [
+        { "type": "text", "text": "Expected Results" }
+      ]
+    },
+    {
+      "type": "bulletList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "[Convert markdown above to ADF]" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+```
+
+**Subtask fields from `jira-mcp-integration.mdc`:**
+- Technical Notes: `customfield_10356` (**ADF**)
+- Acceptance Criteria: `customfield_10256` (**ADF**)
+- QA Test Case: `customfield_10462` (**ADF**, subtask only)
+- **Parent: User Story key** (via `parent` field in Jira)
+
+## Copy/Paste Checklist (Before Creating/Updating Jira)
+
+Use `.cursor/rules/jira-mcp-integration.mdc` to ensure:
+
+- You're using **Story + Subtask** for feature work (no standalone Tasks).
+- The **User Story has `parent_key` set to a Feature key** (e.g., `{"parent": {"key": "WOR-456"}}`).
+- The **Subtask has `parent_key` set to the User Story key** (e.g., `{"parent": {"key": "WOR-123"}}`).
+- You're respecting the **character limits** (esp. summary).
+- You're using **ADF** for:
+  - `customfield_10356` (Technical Notes)
+  - `customfield_10256` (Acceptance Criteria)
+  - `customfield_10462` (QA Test Case, Subtask only)
+- You're sending **Sprint** (`customfield_10020`) in the correct shape (single integer), per the "Bad Request pitfall" notes.
+- **You have removed any references to local `.md` files** from all fields before sending to Jira. Only Jira issue keys (e.g., `WOR-123`) and external URLs should be referenced.

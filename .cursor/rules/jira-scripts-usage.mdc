@@ -1,0 +1,119 @@
+---
+description: USE WHEN: creating, pulling, or updating Jira issues (Epics, Features, User Stories, and Subtasks) in this repository.
+globs:
+alwaysApply: true
+---
+
+# Jira Scripts Usage Guidelines
+
+This repository contains Python scripts in `jira-record/jira-scripts/` for managing Jira issues. **Always use these scripts** when working with Jira issues in this repository.
+
+## Available Scripts
+
+### Epic Management
+
+- **`jira-record/jira-scripts/create_epic_in_jira.py`** - Create Epic issues in Jira from DRAFT Epic markdown files
+- **`jira-record/jira-scripts/pull_epic_from_jira.py`** - Pull Epic data from Jira and update local markdown files
+- **`jira-record/jira-scripts/sync_epic_to_jira.py`** - Sync local Epic markdown files to Jira
+
+### Feature Management
+
+- **`jira-record/jira-scripts/create_feature_in_jira.py`** - Create Feature issues in Jira from DRAFT Feature markdown files
+- **`jira-record/jira-scripts/pull_feature_from_jira.py`** - Pull Feature data from Jira and update local markdown files
+- **`jira-record/jira-scripts/sync_feature_to_jira.py`** - Sync local Feature markdown files to Jira
+
+### User Story and Subtask Management
+
+- **`jira-record/jira-scripts/create_story_in_jira.py`** - Create User Story and Subtask issues in Jira from DRAFT Story+Subtask markdown files
+- **`jira-record/jira-scripts/pull_from_jira.py`** - Pull User Story and Subtask data from Jira and update local markdown files
+- **`jira-record/jira-scripts/sync_to_jira.py`** - Sync local User Story+Subtask markdown files to Jira
+
+## Usage Pattern
+
+### Creating New Issues
+
+1. **Create a DRAFT markdown file** following the appropriate template:
+   - Epic: Reference `ga-jira/.cursor/rules/local-jira-records-epic.mdc`
+   - Feature: Reference `ga-jira/.cursor/rules/local-jira-records-feature.mdc`
+   - User Story+Subtask: Reference `ga-jira/.cursor/rules/local-jira-records-story-subtask.mdc`
+
+2. **Run the appropriate create script**:
+   ```bash
+   # For Epic
+   python3 jira-record/jira-scripts/create_epic_in_jira.py path/to/DRAFT-epic.md
+   
+   # For Feature
+   python3 jira-record/jira-scripts/create_feature_in_jira.py path/to/DRAFT-feature.md
+   
+   # For User Story+Subtask
+   python3 jira-record/jira-scripts/create_story_in_jira.py path/to/DRAFT-story.md
+   ```
+
+3. **The script will**:
+   - Create the issue(s) in Jira
+   - Update the local file with the `jira_key`
+   - Rename the file from DRAFT format to include the Jira key
+
+### Pulling Data from Jira
+
+To sync local markdown files with current Jira data:
+
+```bash
+# For Epic
+python3 jira-record/jira-scripts/pull_epic_from_jira.py path/to/epic.md
+
+# For Feature
+python3 jira-record/jira-scripts/pull_feature_from_jira.py path/to/feature.md
+
+# For User Story+Subtask
+python3 jira-record/jira-scripts/pull_from_jira.py path/to/story.md
+```
+
+### Syncing Local Changes to Jira
+
+To push local markdown file changes to Jira:
+
+```bash
+# For Epic
+python3 jira-record/jira-scripts/sync_epic_to_jira.py path/to/epic.md
+
+# For Feature
+python3 jira-record/jira-scripts/sync_feature_to_jira.py path/to/feature.md
+
+# For User Story+Subtask
+python3 jira-record/jira-scripts/sync_to_jira.py path/to/story.md
+```
+
+## Script Features
+
+All scripts support:
+- **Glob patterns**: `python3 jira-record/jira-scripts/sync_to_jira.py current/Epics/*.md`
+- **Multiple files**: `python3 jira-record/jira-scripts/sync_to_jira.py file1.md file2.md file3.md`
+- **Dry-run mode**: `--dry-run` flag to preview changes without making them
+- **Environment variables**: Automatically loads `.env` files from common locations
+
+## Required Environment Variables
+
+All scripts require these environment variables (typically in a `.env` file):
+
+```
+JIRA_BASE_URL=https://gnapartners.atlassian.net
+JIRA_EMAIL=your-email@example.com
+JIRA_API_TOKEN=your-api-token
+```
+
+## Important Notes
+
+1. **Always use these scripts** - Do not manually create or update Jira issues when working in this repository
+2. **DRAFT files** - Create scripts only work on files with empty `jira_key` (DRAFT files)
+3. **File naming** - Scripts automatically rename DRAFT files to include the Jira key after creation
+4. **ADF fields** - Rich text fields require ADF (Atlassian Document Format) JSON in collapsible code blocks
+5. **Error handling** - Scripts include error handling for common issues (closed sprints, invalid transitions, etc.)
+
+## Reference Documentation
+
+For detailed field mappings, issue type IDs, and Jira API integration details, see:
+- `ga-jira/.cursor/rules/jira-mcp-integration.mdc` - Jira field IDs and API details
+- `ga-jira/.cursor/rules/local-jira-records-epic.mdc` - Epic markdown structure
+- `ga-jira/.cursor/rules/local-jira-records-feature.mdc` - Feature markdown structure
+- `ga-jira/.cursor/rules/local-jira-records-story-subtask.mdc` - User Story+Subtask markdown structure
