@@ -14,7 +14,30 @@ This repository lets you:
 
 Follow these prompts in Cursor to get everything set up:
 
-### Step 0: Check and Install Python
+### Step 0: Clone the Repository
+
+**If you haven't cloned the repository yet, use this prompt:**
+
+**Prompt to Cursor:**
+```
+I need to clone the jira-record repository. Help me clone it using git. I'll provide the repository URL when you ask for it.
+```
+
+**Or if you know the repository URL:**
+
+**Prompt to Cursor:**
+```
+Clone the jira-record repository from [repository URL] into my current directory (or a specific directory if I specify one).
+```
+
+**After cloning, navigate to the repository:**
+
+**Prompt to Cursor:**
+```
+Navigate to the jira-record directory and show me the contents of the repository.
+```
+
+### Step 1: Check and Install Python
 
 **First, check if Python is installed:**
 
@@ -47,7 +70,7 @@ I'm on Linux. Install Python 3 using the appropriate package manager for this di
 Run a command to verify that Python 3 is installed and accessible. Check the version to make sure it's 3.7 or higher.
 ```
 
-### Step 1: Set Up Your Environment
+### Step 2: Set Up Your Environment
 
 **Prompt to Cursor:**
 ```
@@ -62,7 +85,7 @@ Create a .env file in the jira-record directory with placeholder values for:
 2. Click "Create API token" and copy it
 3. Update the `.env` file with your actual values
 
-### Step 2: Create Your First Folder Structure
+### Step 3: Create Your First Folder Structure
 
 **Prompt to Cursor:**
 ```
@@ -70,7 +93,7 @@ Create a folder structure in jira-record/issues/ for organizing Jira issues.
 Create a main folder called "MyProject" as an example.
 ```
 
-### Step 3: Create Your First Issue Template
+### Step 4: Create Your First Issue Template
 
 **Prompt to Cursor:**
 ```
@@ -82,21 +105,21 @@ Name it "DRAFT - Feature - My First Feature.md" and include placeholder content 
 - Success Metrics
 ```
 
-### Step 4: Create the Issue in Jira
+### Step 5: Create the Issue in Jira
 
 **Prompt to Cursor:**
 ```
 Create this DRAFT Feature in Jira.
 ```
 
-### Step 5: Pull an Existing Issue from Jira
+### Step 6: Pull an Existing Issue from Jira
 
 **Prompt to Cursor:**
 ```
 I have an existing Jira Feature with key WOR-123. Create a local markdown file for it and pull the latest data from Jira.
 ```
 
-### Step 6: Make Changes and Sync
+### Step 7: Make Changes and Sync
 
 **Prompt to Cursor:**
 ```
