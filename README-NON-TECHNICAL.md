@@ -14,6 +14,39 @@ This repository lets you:
 
 Follow these prompts in Cursor to get everything set up:
 
+### Step 0: Check and Install Python
+
+**First, check if Python is installed:**
+
+**Prompt to Cursor:**
+```
+Check if Python 3 is installed on this system. If it's not installed, provide instructions for installing Python 3.7 or higher for my operating system.
+```
+
+**If Python is not installed, use one of these prompts based on your system:**
+
+**For macOS:**
+```
+I'm on macOS. Help me install Python 3 using Homebrew, or provide instructions for downloading it from python.org.
+```
+
+**For Windows:**
+```
+I'm on Windows. Help me install Python 3 from the Microsoft Store or from python.org, and make sure it's added to my PATH.
+```
+
+**For Linux:**
+```
+I'm on Linux. Help me install Python 3 using my package manager (apt, yum, etc.).
+```
+
+**Verify Python is working:**
+
+**Prompt to Cursor:**
+```
+Verify that Python 3 is installed and accessible. Check the version to make sure it's 3.7 or higher.
+```
+
 ### Step 1: Set Up Your Environment
 
 **Prompt to Cursor:**
